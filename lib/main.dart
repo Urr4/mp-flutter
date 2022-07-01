@@ -45,8 +45,19 @@ class _MealPlannerHomepageState extends State<MealPlannerHomepage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Meal Planner"),
+        actions: [
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(onPressed: (){}, icon: const Icon(Icons.account_box_rounded)),
+                const Text("Your Name")
+              ],
+            )
+          )
+        ],
       ),
-        drawer: const MealPlannerAppBarDrawer(),
+      drawer: const MealPlannerAppBarDrawer(),
       body: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -81,6 +92,26 @@ class _MealPlannerHomepageState extends State<MealPlannerHomepage> {
                 }
                 return const CircularProgressIndicator();
               },
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left:10, right: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), minimumSize: Size(80, 50)),
+                    onPressed: () {},
+                    child: const Text('Generate Shopping-List'),
+                  )
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left:10, right: 10),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), minimumSize: Size(80, 50)),
+                      onPressed: () {},
+                      child: const Text('Randomize Meals'),
+                    )
+                ),
+              ],
             )
         ]
       )

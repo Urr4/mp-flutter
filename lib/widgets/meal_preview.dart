@@ -17,6 +17,7 @@ class MealPreview extends StatefulWidget {
 class _MealPreviewState extends State<MealPreview> {
   @override
   Widget build(BuildContext context) {
+    final _isFavorite = widget.meal.id != null;
     return Center(
         child: Card(
           child: Column(
@@ -37,7 +38,7 @@ class _MealPreviewState extends State<MealPreview> {
                   Flexible(
                     child: ListTile(
                       title: Text(widget.meal.name, style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 1.5)),
-                      trailing: const Icon(Icons.favorite_border)
+                      trailing: IconButton(onPressed: (){}, icon: Icon(_isFavorite ? Icons.favorite_border : Icons.favorite), color: Colors.red),
                     )
                   ),
                 ],
