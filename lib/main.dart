@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mp_flutter/widgets/meal_preview_list.dart';
 
-import 'repositories/meal_repository.dart';
+import 'models/meal.dart';
+import 'repositories/meal/meal_repository.dart';
 import 'widgets/meal_planner_app_bar_drawer.dart';
 import 'widgets/meal_preview.dart';
 
@@ -32,89 +34,67 @@ class MealPlannerHomepage extends StatefulWidget {
 }
 
 class _MealPlannerHomepageState extends State<MealPlannerHomepage> {
-  late Future<List<Meal>> futureMeals;
-
-  @override
-  void initState(){
-    super.initState();
-    futureMeals = MealRepository().fetchMeals();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Meal Planner"),
-        actions: [
-          Center(
-            child: Column(
+        appBar: AppBar(
+          title: const Text("Meal Planner"),
+          actions: [
+            Center(
+                child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                IconButton(onPressed: (){}, icon: const Icon(Icons.account_box_rounded)),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.account_box_rounded)),
                 const Text("Your Name")
               ],
-            )
-          )
-        ],
-      ),
-      drawer: const MealPlannerAppBarDrawer(),
-      body: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Padding(
+            ))
+          ],
+        ),
+        drawer: const MealPlannerAppBarDrawer(),
+        body: SingleChildScrollView(
+            child: Column(mainAxisSize: MainAxisSize.max, children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Padding(
                   padding: EdgeInsets.only(left: 30, top: 30),
-                  child: Text("Meal-Plan", style: TextStyle(fontSize: 20),)
-                ),
-                Padding(
+                  child: Text(
+                    "Meal-Plan",
+                    style: TextStyle(fontSize: 20),
+                  )),
+              Padding(
                   padding: const EdgeInsets.only(right: 30, top: 30),
-                  child: IconButton(onPressed: (){}, icon: const Icon(Icons.abc))
-                )
-              ],
-            ),
-            FutureBuilder<List<Meal>>(
-              future: futureMeals,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MealPreview(meal: snapshot.data!.elementAt(index));
-                      }
-                  );
-                }else if (snapshot.hasError){
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              },
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left:10, right: 10),
+                  child:
+                      IconButton(onPressed: () {}, icon: const Icon(Icons.abc)))
+            ],
+          ),
+          const MealPreviewList(),
+          Row(
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), minimumSize: Size(80, 50)),
+                    style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 20),
+                        minimumSize: Size(80, 50)),
                     onPressed: () {},
                     child: const Text('Generate Shopping-List'),
-                  )
-                ),
-                Padding(
-                    padding: EdgeInsets.only(left:10, right: 10),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), minimumSize: Size(80, 50)),
-                      onPressed: () {},
-                      child: const Text('Randomize Meals'),
-                    )
-                ),
-              ],
-            )
-        ]
-      )
-    );
+                  )),
+              Padding(
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        textStyle: const TextStyle(fontSize: 20),
+                        minimumSize: Size(80, 50)),
+                    onPressed: () {},
+                    child: const Text('Randomize Meals'),
+                  )),
+            ],
+          )
+        ])));
   }
 }

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mp_flutter/meal_page.dart';
+
+import '../recipe_page.dart';
 
 class MealPlannerAppBarDrawer extends StatelessWidget {
   const MealPlannerAppBarDrawer({
@@ -32,11 +35,13 @@ class MealPlannerAppBarDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Meals', style: TextStyle(fontSize: 15)),
             onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MealPage()));
             },
           ),
           ListTile(
             title: const Text('Recipes', style: TextStyle(fontSize: 15)),
             onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const RecipePage()));
             },
           ),
         ],
